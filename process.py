@@ -34,6 +34,48 @@ def get_fixture(home_team, away_team, data):
     return pd.DataFrame(fixture)
 
 
+def trail(data, team_name):
+    fixtures = []
+
+    x = 0
+    size = 10
+
+    for i in range(data.shape[0]):
+        d = data[x:size]
+        for index, row in d.iterrows():
+            record = np.empty(9, dtype=object)
+
+            if row[2] == team_name or row[3] == team_name:
+                row = row.tolist()
+                record[0] = row[1].split('/')[1]
+
+                if row[2] == team_name:
+                    record[1] = 1
+                    if row[9] == 'A': record[4] = 0
+                    elif row[9] == 'H': record[4] = 3
+                    else: record[4] = 1
+
+                elif row[3] == team_name:
+                    record[1] = 0
+                    if row[9] == 'A': record[4] = 3
+                    elif row[9] == 'H': record[4] = 0
+                    else: record[4] = 1
+
+                record[2] = row[7]
+                record[3] = row[8]
+                record[5] = row[23]
+                record[6] = row[24]
+                record[7] = row[25]
+                record[8] = row[4]
+
+                fixtures.append(record)
+
+        x += 10
+        size += 10
+
+    return pd.DataFrame(fixtures)
+
+
 if __name__ == '__main__':
     dt = process()
     fxt = get_fixture("Chelsea", "Man United", dt)
