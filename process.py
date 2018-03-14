@@ -34,6 +34,15 @@ def get_fixture(home_team, away_team, data):
     return pd.DataFrame(fixture)
 
 
+def get_data():
+    data = []
+    with open('data/E0 (20).csv', 'r', encoding='utf-16') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            data.append(row[: 26])
+
+    return pd.DataFrame(np.array(data))
+
 def trail(data, team_name):
     fixtures = []
 
