@@ -6,14 +6,15 @@ import numpy as np
 
 
 def process():
-    data = []
+    season = []
+    all_seasons = []
     for i in range(1, 27):
-        with open('data/E0 ({}).csv'.format(i), mode='rt', encoding='utf-16') as f:
+        with open('data/E0 ({}).csv'.format(i), mode='rt', encoding='iso-8859-1') as f:
             reader = csv.reader(f)
             for row in reader:
-                data.append(row[:26])
-
-    return pd.DataFrame(np.array(data))
+                season.append(row[:26])
+        all_seasons.append(season)
+    return pd.DataFrame(np.array(all_seasons))
 
 
 def get_fixture(home_team, away_team, data):
@@ -43,7 +44,8 @@ def get_data():
 
     return pd.DataFrame(np.array(data))
 
-def trail(data, team_name):
+
+def trial(data, team_name):
     fixtures = []
 
     x = 0
